@@ -1,0 +1,104 @@
+Ex 1:
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the gasoline price: ");
+        float fuelPrice = scanner.nextFloat();
+        scanner.nextLine(); // Consume newline character
+
+        Map<String, VehicleData> vehicles = new HashMap<>();
+
+        while (true) {
+            System.out.println("Enter vehicle type (Car, Bus, or exit): ");
+            String type = scanner.nextLine();
+
+            if (type.equalsIgnoreCase("exit")) {
+                break;
+            }
+
+            System.out.println("How much gasoline does " + type + " take?");
+            float fuelConsumption = scanner.nextFloat();
+            scanner.nextLine(); // Consume newline character
+
+            vehicles.put(type, new VehicleData(fuelConsumption, fuelPrice));
+        }
+
+        calculateAndPrintExpenses(vehicles);
+
+        scanner.close();
+    }
+
+    private static void calculateAndPrintExpenses(Map<String, VehicleData> vehicles) {
+        for (Map.Entry<String, VehicleData> entry : vehicles.entrySet()) {
+            String type = entry.getKey();
+            VehicleData data = entry.getValue();
+
+            double expense = data.getFuelConsumption() * 1.0 / 100 * data.getDistance() * data.getFuelPrice();
+            System.out.printf("The expense of traveling %.2f kilometers by %s is: %.2f euros\n", data.getDistance(),
+                    type, expense);
+        }
+    }
+}
+
+class VehicleData {
+    private final double fuelConsumption;
+    private final double fuelPrice;
+    private final double distance;
+
+    public VehicleData(double fuelConsumption, double fuelPrice) {
+        this(fuelConsumption, fuelPrice, 155); // Default distance
+    }
+
+    public VehicleData(double fuelConsumption, double fuelPrice, double distance) {
+        this.fuelConsumption = fuelConsumption;
+        this.fuelPrice = fuelPrice;
+        this.distance = distance;
+    }
+
+    public double getFuelConsumption() {
+        return fuelConsumption;
+    }
+
+    public double getFuelPrice() {
+        return fuelPrice;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+}
+Ex 2:
+import java.util.Scanner;
+
+public class main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        boolean repeat = true;
+
+        while (repeat) {
+            System.out.print("Enter a sentence: ");
+            String sentence = scanner.nextLine();
+
+            int stringLength = sentence.length();
+            int spaceCount = 0;
+            for (char c : sentence.toCharArray()) {
+                if (Character.isWhitespace(c)) {
+                    spaceCount++;
+                }
+            }
+            System.out.println("Total number of chars are : " + stringLength);
+            System.out.println("Total number of space-bars are " + spaceCount);
+
+            System.out.println("Do you want to repeat? ");
+            String response = scanner.nextLine().toLowerCase();
+            repeat = response.equals("yes");
+        }
+    }
+}
